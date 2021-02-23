@@ -80,8 +80,11 @@ ultima_amostra = function (data) {
     let corTempGeradorPredio = "Verde";
     let corUmidGeradorCasa = "Verde";
     let corUmidGeradorPredio = "Verde";
-    let corOrvalhoGeradorCasa = "Verde";
-    let corOrvalhoGeradorPredio = "Verde";
+    let corstatusEnergiaCasa = "Verde";
+    let corstatusEnergiaPredio = "Verde";
+    let fornecimentoCasa = "CPFL"
+    let fornecimentoPredio = "CPFL"
+    
 
     abrePaginha = function (mensagem, parametro, horas) {
         var myWindow = window.open("", "MsgWindow", "width=900,height=250");
@@ -116,10 +119,10 @@ ultima_amostra = function (data) {
 
     }
 
-    checkPontoOrvalho = function(pontoDeOrvalho,temperaturaAtual,horas, local){
+    checkStatus = function(statusEnergia,horas, local){
 
-        if (pontoDeOrvalho >= temperaturaAtual) {
-            abrePaginha(`pontoDeOrvalho ${local}`, pontoDeOrvalho, horas)
+        if (statusEnergia >= 1) {
+            abrePaginha(`Status Gerador Ligado ${local}`, statusEnergia , horas)
             return "Vermelho";
     
         } else {
@@ -127,18 +130,34 @@ ultima_amostra = function (data) {
         };
 
     }
+    checkStatusFornecimento = function(statusEnergia){
 
-    corTempGeradorCasa = checkTemperatura(temperaturaGeradorCasaAtual,setPointTempGeradorMax,setPointTempGeradorMin,HoraGerador1,"Gerador Casa")
-    corTempGeradorPredio = checkTemperatura(temperaturaGeradorPredioAtual,setPointTempGeradorMax,setPointTempGeradorMin,HoraGerador1,"Gerador Predio")
+        if (statusEnergia >= 1) {
+            return "GERADOR";
+    
+        } else {
+            return "CPFL";
+        };
+
+    }
+
+    corTempGeradorCasa = checkTemperatura(temperaturaGeradorCasaAtual,setPointTempGeradorMax,setPointTempGeradorMin,HoraGerador1,"Gerador Casa");
+    corTempGeradorPredio = checkTemperatura(temperaturaGeradorPredioAtual,setPointTempGeradorMax,setPointTempGeradorMin,HoraGerador2,"Gerador Predio");
+    fornecimentoCasa= checkStatusFornecimento(StatusEnergiaCasa);
+    fornecimentoPredio=checkStatusFornecimento(StatusEnergiaPredio);
+    corstatusEnergiaCasa = checkStatus(StatusEnergiaCasa,HoraGerador1,"Gerador Casa");
+    corstatusEnergiaPredio = checkStatus(StatusEnergiaPredio,HoraGerador2,"Gerador Predio");
 
     stringListGeradorCasa = `<div class="Casa">
                     <h1>Gerador Casa</h1>
                     <ol>
                     <li> Hora: <span class="Verde">${HoraGerador1}</span> </li>
                     <li> Temperatura: <span class="${corTempGeradorCasa}">${temperaturaGeradorCasaAtual.toFixed(3)} ºC</span> </li>
-                    <li> Umidade: <span class="${corUmidGeradorCasa}">${umidadeGeradorCasaAtual.toFixed(3)} %</span></li>
+                    <li> Umidade: <span class="Verde">${umidadeGeradorCasaAtual.toFixed(3)} %</span></li>
                     <li> Pressão: <span class="Verde">${pressaoGeradorCasaAtual.toFixed(3)} hpa</span></li>
-                    <li> Ponto de Orvalho: <span class="${corOrvalhoGeradorPredio}">${pontoDeOrvalhoGeradorCasaAtual.toFixed(3)} ºC</span></li>
+                    <li> Ponto de Orvalho: <span class="Verde">${pontoDeOrvalhoGeradorCasaAtual.toFixed(3)} ºC</span></li>
+                    <li>Fornecimento:<span class="${corstatusEnergiaPredio}"> ${fornecimentoCasa}</span></li>
+
                     <li>Correntes:</li>
                     <table style="width:100%">
                     <th>Fase A</th>
@@ -158,9 +177,10 @@ ultima_amostra = function (data) {
                     <ol>
                     <li> Hora: <span class="Verde">${HoraGerador2}</span> </li>
                     <li> Temperatura: <span class="${corTempGeradorPredio}">${temperaturaGeradorPredioAtual.toFixed(3)} ºC</span> </li>
-                    <li> Umidade: <span class="${corUmidGeradorPredio}">${umidadeGeradorPredioAtual.toFixed(3)} %</span></li>
+                    <li> Umidade: <span class="Verde">${umidadeGeradorPredioAtual.toFixed(3)} %</span></li>
                     <li> Pressão: <span class="Verde">${pressaoGeradorPredioAtual.toFixed(3)} hpa</span></li>
-                    <li> Ponto de Orvalho: <span class="${corOrvalhoGeradorPredio}">${pontoDeOrvalhoGeradorPredioAtual.toFixed(3)} ºC</span></li>
+                    <li> Ponto de Orvalho: <span class="Verde">${pontoDeOrvalhoGeradorPredioAtual.toFixed(3)} ºC</span></li>
+                    <li>Fornecimento:<span class="${corstatusEnergiaPredio}"> ${fornecimentoCasa}</span></li>
                     <li>Correntes:</li>
                     <table style="width:100%">
                     <th>Fase A</th>
@@ -504,7 +524,7 @@ var GeradoresMonitor = function () {
         });
 
 
-    var Correntes = new CanvasJS.Chart("Correntes", {
+    var CorrentesCasa = new CanvasJS.Chart("CorrentesCasa", {
         animationEnabled: false,
         zoomEnabled: true,
         backgroundColor: backgroundColor,
@@ -523,7 +543,6 @@ var GeradoresMonitor = function () {
             verticalAlign: "top",  // top, center, bottom
         },
         axisY: {
-            title: "Pressão Barométrica (hPa)",
             gridColor: GridColor,
             titleFontSize: 15,
             titleFontColor: fontColor,
@@ -541,7 +560,55 @@ var GeradoresMonitor = function () {
             //includeZero: true
         },
         axisY2: {
-            title: "Ponto de Orvalho (ºC)",
+            titleFontSize: 15,
+            gridColor: GridColor,
+            //reversed: true,
+            titleFontColor: fontColor,
+            labelFontColor: fontColor,
+            includeZero: false,
+            labelFontSize: labelFontSize,
+            valueFormatString: "0.0",
+            crosshair: {
+                enabled: true, //disable here
+                snapToDataPoint: true,
+                valueFormatString: "##.0"
+            },
+            stripLines: [
+                {
+                    startValue: 2000,
+                    endValue: -100,
+                    color: bacgroundGraph
+                },]
+            //labelAngle: -45,
+            //interval: 0.5,
+            //includeZero: true
+
+        },
+        axisY3: {
+            titleFontSize: 15,
+            gridColor: GridColor,
+            //reversed: true,
+            titleFontColor: fontColor,
+            labelFontColor: fontColor,
+            includeZero: false,
+            labelFontSize: labelFontSize,
+            valueFormatString: "0.0",
+            crosshair: {
+                enabled: true, //disable here
+                snapToDataPoint: true,
+                valueFormatString: "##.0"
+            },
+            stripLines: [
+                {
+                    startValue: 2000,
+                    endValue: -100,
+                    color: bacgroundGraph
+                },]
+            //labelAngle: -45,
+            //interval: 0.5,
+            //includeZero: true
+
+        },axisY3: {
             titleFontSize: 15,
             gridColor: GridColor,
             //reversed: true,
@@ -572,24 +639,184 @@ var GeradoresMonitor = function () {
             showInLegend: true,
             markerType: markerType,
             lineThickness: lineThickness,
-            name: "Pressão (hPa)",
+            name: "Corrente Fase A (A)",
             //lineColor: "rgba(255,150,50,0.3)",
-            color: "rgb(0,255,0)",
-            yValueFormatString: "0.00 hPa",
+            color: "rgb(255,255,0)",
+            yValueFormatString: "0.00 A",
             xValueType: "dateTime",
-            dataPoints: DataPressureGeradorCasa
+            dataPoints: DataCorrenteAGeradorCasa
         }, {
             type: lineType,
             showInLegend: true,
             markerType: markerType,
             lineThickness: lineThickness,
-            name: "Ponto de Orvalho(ºC)",
+            name: "Corrente Fase B (A)",
             //lineColor: "rgba(50,150,150,0.3)",
-            color: "rgba(255,255,0,1)",
+            color: "rgb(255,255,0)",
             axisYType: "secondary",
-            yValueFormatString: "0.00 ºC",
+            yValueFormatString: "0.00 A",
             xValueType: "dateTime",
-            dataPoints: DataDew_pointGeradorCasa
+            dataPoints: DataCorrenteBGeradorCasa
+        },{
+            type: lineType,
+            showInLegend: true,
+            markerType: markerType,
+            lineThickness: lineThickness,
+            name: "Corrente Neutro (A)",
+            //lineColor: "rgba(50,150,150,0.3)",
+            color: "rgb(255,255,0)",
+            axisYType: "secondary",
+            yValueFormatString: "0.00 A",
+            xValueType: "dateTime",
+            dataPoints: DataCorrenteNeutroGeradorCasa
+        },{
+            type: lineType,
+            showInLegend: true,
+            markerType: markerType,
+            lineThickness: lineThickness,
+            name: "Status Gerador",
+            //lineColor: "rgba(50,150,150,0.3)",
+            color: "rgb(0,255,0)",
+            axisYType: "secondary",
+            yValueFormatString: "0",
+            xValueType: "dateTime",
+            dataPoints: DataStatusEnergiaGeradorCasa
+        }]
+    });
+    var CorrentesPredio = new CanvasJS.Chart("CorrentesPredio", {
+        animationEnabled: false,
+        zoomEnabled: true,
+        backgroundColor: backgroundColor,
+        title: {
+            fontColor: fontColor,
+
+            text: "Gerador Prédio",
+        },
+        toolTip: toolTipConfig,
+        exportEnabled: true,
+        legend: {
+            fontColor: fontColor,
+            fontSize: 15,
+            fontFamily: "tamoha",
+            horizontalAlign: "center", // left, center ,right 
+            verticalAlign: "top",  // top, center, bottom
+        },
+        axisY: {
+            gridColor: GridColor,
+            titleFontSize: 15,
+            titleFontColor: fontColor,
+            labelFontColor: fontColor,
+            includeZero: false,
+            labelFontSize: labelFontSize,
+            valueFormatString: "0.0",
+            crosshair: {
+                enabled: true, //disable here
+                snapToDataPoint: true,
+                valueFormatString: "##.0"
+            },
+            //labelAngle: -45,
+            //interval: 0.5,
+            //includeZero: true
+        },
+        axisY2: {
+            titleFontSize: 15,
+            gridColor: GridColor,
+            //reversed: true,
+            titleFontColor: fontColor,
+            labelFontColor: fontColor,
+            includeZero: false,
+            labelFontSize: labelFontSize,
+            valueFormatString: "0.0",
+            crosshair: {
+                enabled: true, //disable here
+                snapToDataPoint: true,
+                valueFormatString: "##.0"
+            },
+            stripLines: [
+                {
+                    startValue: 2000,
+                    endValue: -100,
+                    color: bacgroundGraph
+                },]
+            //labelAngle: -45,
+            //interval: 0.5,
+            //includeZero: true
+
+        },
+        axisY3: {
+            titleFontSize: 15,
+            gridColor: GridColor,
+            //reversed: true,
+            titleFontColor: fontColor,
+            labelFontColor: fontColor,
+            includeZero: false,
+            labelFontSize: labelFontSize,
+            valueFormatString: "0.0",
+            crosshair: {
+                enabled: true, //disable here
+                snapToDataPoint: true,
+                valueFormatString: "##.0"
+            },
+            stripLines: [
+                {
+                    startValue: 2000,
+                    endValue: -100,
+                    color: bacgroundGraph
+                },]
+            //labelAngle: -45,
+            //interval: 0.5,
+            //includeZero: true
+
+        
+        },
+        axisX: Xaxis,
+        data: [{
+            type: lineType,
+            showInLegend: true,
+            markerType: markerType,
+            lineThickness: lineThickness,
+            name: "Corrente Fase A (A)",
+            //lineColor: "rgba(255,150,50,0.3)",
+            color: "rgb(255,255,0)",
+            yValueFormatString: "0.00 A",
+            xValueType: "dateTime",
+            dataPoints: DataCorrenteAGeradorCasa
+        }, {
+            type: lineType,
+            showInLegend: true,
+            markerType: markerType,
+            lineThickness: lineThickness,
+            name: "Corrente Fase B (A)",
+            //lineColor: "rgba(50,150,150,0.3)",
+            color: "rgb(255,255,0)",
+            axisYType: "secondary",
+            yValueFormatString: "0.00 A",
+            xValueType: "dateTime",
+            dataPoints: DataCorrenteBGeradorCasa
+        },{
+            type: lineType,
+            showInLegend: true,
+            markerType: markerType,
+            lineThickness: lineThickness,
+            name: "Corrente Neutro (A)",
+            //lineColor: "rgba(50,150,150,0.3)",
+            color: "rgb(255,255,0)",
+            axisYType: "secondary",
+            yValueFormatString: "0.00 A",
+            xValueType: "dateTime",
+            dataPoints: DataCorrenteNeutroGeradorCasa
+        },{
+            type: lineType,
+            showInLegend: true,
+            markerType: markerType,
+            lineThickness: lineThickness,
+            name: "Status Gerador",
+            //lineColor: "rgba(50,150,150,0.3)",
+            color: "rgb(0,255,0)",
+            axisYType: "secondary",
+            yValueFormatString: "0",
+            xValueType: "dateTime",
+            dataPoints: DataStatusEnergiaGeradorCasa
         }]
     });
     
@@ -735,8 +962,8 @@ var GeradoresMonitor = function () {
         document.body.style.cursor = "default"
         GeradorCasa.render();
         GeradorPredio.render();
-        Correntes.render();
-
+        CorrentesCasa.render();
+        CorrentesPredio.render();
 
     }
     //************auto-update*****************/
