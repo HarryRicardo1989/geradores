@@ -547,7 +547,7 @@ var GeradoresMonitor = function () {
             titleFontSize: 15,
             titleFontColor: fontColor,
             labelFontColor: fontColor,
-            includeZero: false,
+            includeZero: true,
             labelFontSize: labelFontSize,
             valueFormatString: "0.0",
             crosshair: {
@@ -565,7 +565,7 @@ var GeradoresMonitor = function () {
             //reversed: true,
             titleFontColor: fontColor,
             labelFontColor: fontColor,
-            includeZero: false,
+            includeZero: true,
             labelFontSize: labelFontSize,
             valueFormatString: "0.0",
             crosshair: {
@@ -590,7 +590,7 @@ var GeradoresMonitor = function () {
             //reversed: true,
             titleFontColor: fontColor,
             labelFontColor: fontColor,
-            includeZero: false,
+            includeZero: true,
             labelFontSize: labelFontSize,
             valueFormatString: "0.0",
             crosshair: {
@@ -614,7 +614,7 @@ var GeradoresMonitor = function () {
             //reversed: true,
             titleFontColor: fontColor,
             labelFontColor: fontColor,
-            includeZero: false,
+            includeZero: true,
             labelFontSize: labelFontSize,
             valueFormatString: "0.0",
             crosshair: {
@@ -653,7 +653,6 @@ var GeradoresMonitor = function () {
             name: "Corrente Fase B (A)",
             //lineColor: "rgba(50,150,150,0.3)",
             color: "rgb(255,255,0)",
-            axisYType: "secondary",
             yValueFormatString: "0.00 A",
             xValueType: "dateTime",
             dataPoints: DataCorrenteBGeradorCasa
@@ -665,7 +664,6 @@ var GeradoresMonitor = function () {
             name: "Corrente Neutro (A)",
             //lineColor: "rgba(50,150,150,0.3)",
             color: "rgb(255,255,0)",
-            axisYType: "secondary",
             yValueFormatString: "0.00 A",
             xValueType: "dateTime",
             dataPoints: DataCorrenteNeutroGeradorCasa
@@ -780,7 +778,7 @@ var GeradoresMonitor = function () {
             color: "rgb(255,255,0)",
             yValueFormatString: "0.00 A",
             xValueType: "dateTime",
-            dataPoints: DataCorrenteAGeradorCasa
+            dataPoints: DataCorrenteAGeradorPredio
         }, {
             type: lineType,
             showInLegend: true,
@@ -792,7 +790,7 @@ var GeradoresMonitor = function () {
             axisYType: "secondary",
             yValueFormatString: "0.00 A",
             xValueType: "dateTime",
-            dataPoints: DataCorrenteBGeradorCasa
+            dataPoints: DataCorrenteBGeradorPredio
         },{
             type: lineType,
             showInLegend: true,
@@ -804,7 +802,7 @@ var GeradoresMonitor = function () {
             axisYType: "secondary",
             yValueFormatString: "0.00 A",
             xValueType: "dateTime",
-            dataPoints: DataCorrenteNeutroGeradorCasa
+            dataPoints: DataCorrenteNeutroGeradorPredio
         },{
             type: lineType,
             showInLegend: true,
@@ -816,7 +814,7 @@ var GeradoresMonitor = function () {
             axisYType: "secondary",
             yValueFormatString: "0",
             xValueType: "dateTime",
-            dataPoints: DataStatusEnergiaGeradorCasa
+            dataPoints: DataStatusEnergiaGeradorPredio
         }]
     });
     
@@ -876,27 +874,27 @@ var GeradoresMonitor = function () {
             });
             DataCorrenteAGeradorCasa.push({
                 x: datatimeUTC,
-                y: data[GeradorName][i].corrente_Fase_A / 100, label: HMS
+                y: data[GeradorName][i].corrente_Fase_A , label: HMS
 
             });
             DataCorrenteBGeradorCasa.push({
                 x: datatimeUTC,
-                y: data[GeradorName][i].corrente_Fase_B / 100, label: HMS
+                y: data[GeradorName][i].corrente_Fase_B , label: HMS
 
             });
             DataCorrenteCGeradorCasa.push({
                 x: datatimeUTC,
-                y: data[GeradorName][i].corrente_Fase_C / 100, label: HMS
+                y: data[GeradorName][i].corrente_Fase_C , label: HMS
 
             });
             DataCorrenteNeutroGeradorCasa.push({
                 x: datatimeUTC,
-                y: data[GeradorName][i].corrente_Neutro / 100, label: HMS
+                y: data[GeradorName][i].corrente_Neutro , label: HMS
 
             });
             DataStatusEnergiaGeradorCasa.push({
                 x: datatimeUTC,
-                y: data[GeradorName][i].status_Energia / 100, label: HMS
+                y: data[GeradorName][i].status_Energia , label: HMS
 
             });
 
@@ -928,35 +926,30 @@ var GeradoresMonitor = function () {
             });
             DataCorrenteAGeradorPredio.push({
                 x: datatimeUTC,
-                y: data[GeradorName2][i].corrente_Fase_A / 100, label: HMS
+                y: data[GeradorName2][i].corrente_Fase_A , label: HMS
 
             });
             DataCorrenteBGeradorPredio.push({
                 x: datatimeUTC,
-                y: data[GeradorName2][i].corrente_Fase_B / 100, label: HMS
+                y: data[GeradorName2][i].corrente_Fase_B , label: HMS
 
             });
             DataCorrenteCGeradorPredio.push({
                 x: datatimeUTC,
-                y: data[GeradorName2][i].corrente_Fase_C / 100, label: HMS
+                y: data[GeradorName2][i].corrente_Fase_C , label: HMS
 
             });
             DataCorrenteNeutroGeradorPredio.push({
                 x: datatimeUTC,
-                y: data[GeradorName2][i].corrente_Neutro / 100, label: HMS
+                y: data[GeradorName2][i].corrente_Neutro , label: HMS
 
             });
             DataStatusEnergiaGeradorPredio.push({
                 x: datatimeUTC,
-                y: data[GeradorName2][i].status_Energia / 100, label: HMS
+                y: data[GeradorName2][i].status_Energia , label: HMS
 
             });
 
-            DataCorrenteAGeradorPredio.length = 0;
-            DataCorrenteBGeradorPredio.length = 0;
-            DataCorrenteCGeradorPredio.length = 0;
-            DataCorrenteNeutroGeradorPredio.length = 0;
-            DataStatusEnergiaGeradorPredio.length = 0;
 
         }
         document.body.style.cursor = "default"
