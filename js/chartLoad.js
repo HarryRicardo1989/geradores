@@ -1,8 +1,8 @@
 
 var botao = 'horas';
-var tempo = 24;
-let tempoHora = 24
-let tempoDia = 1
+var tempo = 6;
+let tempoHora = 6
+let tempoDia = 1/4
 const setPointTempMax = 25
 const setPointTempMin = 19
 const setPointTempGeradorMax = 70
@@ -68,12 +68,12 @@ ultima_amostra = function (data) {
     let pontoDeOrvalhoGeradorPredioAtual = data[GeradorName2][0].temperatura_orvalho;
     
     let CorrenteCasaFaseA = data[GeradorName][0].corrente_Fase_A;
-    let CorrenteCasaFaseB = data[GeradorName2][0].corrente_Fase_B;
-    let CorrenteCasaFaseNeutro = data[GeradorName][0].corrente_Neutro;
+    let CorrenteCasaFaseB = data[GeradorName][0].corrente_Fase_B;
+    let CorrenteCasaNeutro = data[GeradorName][0].corrente_Neutro;
     let CorrentePredioFaseA = data[GeradorName2][0].corrente_Fase_A;
-    let CorrentePredioFaseB = data[GeradorName][0].corrente_Fase_B;
-    let CorrentePredioFaseNeutro = data[GeradorName2][0].corrente_Neutro;
-    let StatusEnergiaCasa = data[GeradorName2][0].status_Energia;
+    let CorrentePredioFaseB = data[GeradorName2][0].corrente_Fase_B;
+    let CorrentePredioNeutro = data[GeradorName2][0].corrente_Neutro;
+    let StatusEnergiaCasa = data[GeradorName][0].status_Energia;
     let StatusEnergiaPredio = data[GeradorName2][0].status_Energia;
 
     let corTempGeradorCasa = "Verde";
@@ -164,9 +164,9 @@ ultima_amostra = function (data) {
                     <th>Fase B</th> 
                     <th>Neutro</th>
                     <tr>
-                    <td><span class="Verde">${CorrentePredioFaseA.toFixed(2)} A</span></td>
-                    <td><span class="Verde">${CorrentePredioFaseB.toFixed(2)} A</span></td>
-                    <td><span class="Verde">${CorrentePredioFaseNeutro.toFixed(2)} A</span></td>
+                    <td><span class="Verde">${CorrenteCasaFaseA.toFixed(2)} A</span></td>
+                    <td><span class="Verde">${CorrenteCasaFaseB.toFixed(2)} A</span></td>
+                    <td><span class="Verde">${CorrenteCasaNeutro.toFixed(2)} A</span></td>
                     </tr>
                     </table>
                     </ol>
@@ -187,9 +187,9 @@ ultima_amostra = function (data) {
                     <th>Fase B</th> 
                     <th>Neutro</th>
                     <tr>
-                    <td><span class="Verde">${CorrenteCasaFaseA.toFixed(2)} A</span></td>
-                    <td><span class="Verde">${CorrenteCasaFaseB.toFixed(2)} A</span></td>
-                    <td><span class="Verde">${CorrenteCasaFaseNeutro.toFixed(2)} A</span></td>
+                    <td><span class="Verde">${CorrentePredioFaseA.toFixed(2)} A</span></td>
+                    <td><span class="Verde">${CorrentePredioFaseB.toFixed(2)} A</span></td>
+                    <td><span class="Verde">${CorrentePredioNeutro.toFixed(2)} A</span></td>
                     </tr>
                     </table>
                     </ol>
@@ -787,7 +787,6 @@ var GeradoresMonitor = function () {
             name: "Corrente Fase B (A)",
             //lineColor: "rgba(50,150,150,0.3)",
             color: "rgb(255,255,0)",
-            axisYType: "secondary",
             yValueFormatString: "0.00 A",
             xValueType: "dateTime",
             dataPoints: DataCorrenteBGeradorPredio
@@ -799,7 +798,6 @@ var GeradoresMonitor = function () {
             name: "Corrente Neutro (A)",
             //lineColor: "rgba(50,150,150,0.3)",
             color: "rgb(255,255,0)",
-            axisYType: "secondary",
             yValueFormatString: "0.00 A",
             xValueType: "dateTime",
             dataPoints: DataCorrenteNeutroGeradorPredio
