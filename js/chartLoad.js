@@ -158,8 +158,9 @@ ultima_amostra = function (data) {
                     <li> Ponto de Orvalho: <span class="Verde">${pontoDeOrvalhoGeradorCasaAtual.toFixed(3)} ºC</span></li>
                     <li>Fornecimento:<span class="${corstatusEnergiaPredio}"> ${fornecimentoCasa}</span></li>
 
-                    <li>Correntes:</li>
-                    <table style="width:100%">
+                    <li class="botoes">Correntes:</li>
+                    <li>Dif. Corrente:<span class="Verde"> ${(CorrenteCasaFaseA-CorrenteCasaFaseB-CorrenteCasaNeutro).toFixed(2)} A</span></li>
+                    <table style="width:110%">
                     <th>Fase A</th>
                     <th>Fase B</th> 
                     <th>Neutro</th>
@@ -167,6 +168,11 @@ ultima_amostra = function (data) {
                     <td><span class="Verde">${CorrenteCasaFaseA.toFixed(2)} A</span></td>
                     <td><span class="Verde">${CorrenteCasaFaseB.toFixed(2)} A</span></td>
                     <td><span class="Verde">${CorrenteCasaNeutro.toFixed(2)} A</span></td>
+                    </tr>
+                    <tr>
+                    <td><span class="Verde">${((CorrenteCasaFaseA*127)/1000).toFixed(2)} KW</span></td>
+                    <td><span class="Verde">${((CorrenteCasaFaseB*127)/1000).toFixed(2)} KW</span></td>
+                    <td><span class="Verde">${((CorrenteCasaNeutro*127)/1000).toFixed(2)} KW</span></td>
                     </tr>
                     </table>
                     </ol>
@@ -181,8 +187,9 @@ ultima_amostra = function (data) {
                     <li> Pressão: <span class="Verde">${pressaoGeradorPredioAtual.toFixed(3)} hpa</span></li>
                     <li> Ponto de Orvalho: <span class="Verde">${pontoDeOrvalhoGeradorPredioAtual.toFixed(3)} ºC</span></li>
                     <li>Fornecimento:<span class="${corstatusEnergiaPredio}"> ${fornecimentoCasa}</span></li>
-                    <li>Correntes:</li>
-                    <table style="width:100%">
+                    <li class="botoes"> Correntes:</li>
+                    <li>Dif. Corrente:<span class="Verde"> ${(CorrentePredioFaseA-CorrentePredioFaseB-CorrentePredioNeutro).toFixed(2)} A</span></li>
+                    <table style="width:110%">
                     <th>Fase A</th>
                     <th>Fase B</th> 
                     <th>Neutro</th>
@@ -190,6 +197,10 @@ ultima_amostra = function (data) {
                     <td><span class="Verde">${CorrentePredioFaseA.toFixed(2)} A</span></td>
                     <td><span class="Verde">${CorrentePredioFaseB.toFixed(2)} A</span></td>
                     <td><span class="Verde">${CorrentePredioNeutro.toFixed(2)} A</span></td>
+                    <tr>
+                    <td><span class="Verde">${((CorrentePredioFaseA*127)/1000).toFixed(2)} KW</span></td>
+                    <td><span class="Verde">${((CorrentePredioFaseB*127)/1000).toFixed(2)} KW</span></td>
+                    <td><span class="Verde">${((CorrentePredioNeutro*127)/1000).toFixed(2)} KW</span></td>
                     </tr>
                     </table>
                     </ol>
