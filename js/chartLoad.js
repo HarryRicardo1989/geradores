@@ -1,8 +1,8 @@
 
 var botao = 'horas';
 var tempo = 6;
-let tempoHora = 6
-let tempoDia = 1/4
+let tempoHora = tempo
+let tempoDia = tempoHora/24
 const setPointTempMax = 25
 const setPointTempMin = 19
 const setPointTempGeradorMax = 70
