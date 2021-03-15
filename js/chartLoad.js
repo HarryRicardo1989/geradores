@@ -292,33 +292,7 @@ var GeradoresMonitor = function () {
     
                 },
                 stripLines: [
-                    {
-                        startValue: setPointTempGeradorMax,
-                        endValue: setPointTempGeradorMax + 1,
-                        color: "rgba(255,0,0,0.00)",
-                        label: "ALARME",
-                        labelFontColor: "rgba(255,50,50,0.5)",
-                        labelAlign: "near",
-                        labelBackgroundColor: "rgba(0,0,0,0.01)",
-                    },
-                    {
-                        startValue: setPointTempGeradorMin - 1,
-                        endValue: setPointTempGeradorMin,
-                        color: "rgba(0,0,255,0.00)",
-                        label: "FRIO",
-                        labelFontColor: "rgba(0,180,255,0.3)",
-                        labelAlign: "near",
-                        labelBackgroundColor: "rgba(0,0,0,0.01)",
-                    },
-                    {
-                        startValue: setPointTempGeradorMin,
-                        endValue: setPointTempGeradorMax,
-                        color: "rgba(0,255,0,0.00)",
-                        label: "IDEAL",
-                        labelFontColor: "rgba(0,255,100,0.3)",
-                        labelAlign: "near",
-                        labelBackgroundColor: "rgba(0,0,0,0.01)",
-                    },
+        
                     {
                         startValue: setPointTempGeradorMax,
                         endValue: 300,
@@ -963,9 +937,9 @@ var GeradoresMonitor = function () {
         }
         document.body.style.cursor = "default"
         GeradorCasa.render();
-        GeradorPredio.render();
         CorrentesCasa.render();
-        CorrentesPredio.render();
+        GeradorPredio.render();
+        //CorrentesPredio.render();
 
     }
     //************auto-update*****************/
@@ -1021,7 +995,6 @@ var GeradoresMonitor = function () {
     tamanhoGrafico = function (horas) {
         tempoHora = parseFloat(horas);
         tempoDia = tempoHora / 24;
-        console.log(tempoDia, tempoHora)
 
         document.body.style.cursor = "wait"
         botaoSelect();
