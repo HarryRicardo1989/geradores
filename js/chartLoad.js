@@ -192,7 +192,7 @@ ultima_amostra = function (data) {
                     <table style="width:110%">
                     <th>Fase A</th>
                     <th>Fase B</th> 
-                    <th>Neutro</th>
+                    <th>Fase C</th>
                     <tr>
                     <td><span class="Verde">${CorrentePredioFaseA.toFixed(2)} A</span></td>
                     <td><span class="Verde">${CorrentePredioFaseB.toFixed(2)} A</span></td>
@@ -666,7 +666,7 @@ var GeradoresMonitor = function () {
             dataPoints: DataStatusEnergiaGeradorCasa
         }]
     });
-    var CorrentesPredio = new CanvasJS.Chart("CorrentesPredio", {
+    /* var CorrentesPredio = new CanvasJS.Chart("CorrentesPredio", {
         animationEnabled: false,
         zoomEnabled: true,
         backgroundColor: backgroundColor,
@@ -799,7 +799,7 @@ var GeradoresMonitor = function () {
             xValueType: "dateTime",
             dataPoints: DataStatusEnergiaGeradorPredio
         }]
-    });
+    }); */
     
     
     function toggleDataSeries(e) {
