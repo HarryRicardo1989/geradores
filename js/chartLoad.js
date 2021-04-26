@@ -52,6 +52,7 @@ const Xaxis = {
 
 
 ultima_amostra = function (data) {
+    console.log(data[GeradorName2][0])
     let HoraGerador1 = new Date((data[GeradorName][0].timestamp - (3600 * 3)) * 1000).toISOString().slice(11, 19).replace('T', ' ');
     let HoraGerador2 = new Date((data[GeradorName2][0].timestamp - (3600 * 3)) * 1000).toISOString().slice(11, 19).replace('T', ' ');
     
@@ -666,7 +667,7 @@ var GeradoresMonitor = function () {
             dataPoints: DataStatusEnergiaGeradorCasa
         }]
     });
-    /* var CorrentesPredio = new CanvasJS.Chart("CorrentesPredio", {
+    var CorrentesPredio = new CanvasJS.Chart("CorrentesPredio", {
         animationEnabled: false,
         zoomEnabled: true,
         backgroundColor: backgroundColor,
@@ -799,7 +800,7 @@ var GeradoresMonitor = function () {
             xValueType: "dateTime",
             dataPoints: DataStatusEnergiaGeradorPredio
         }]
-    }); */
+    });
     
     
     function toggleDataSeries(e) {
@@ -939,7 +940,7 @@ var GeradoresMonitor = function () {
         GeradorCasa.render();
         CorrentesCasa.render();
         GeradorPredio.render();
-        //CorrentesPredio.render();
+        CorrentesPredio.render();
 
     }
     //************auto-update*****************/
