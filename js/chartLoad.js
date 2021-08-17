@@ -952,7 +952,7 @@ var GeradoresMonitor = function () {
 
     setInterval(function () {
         callUpdate()
-    }, 5000)
+    }, 15000)
 
     botaoSelect = function () {
 
